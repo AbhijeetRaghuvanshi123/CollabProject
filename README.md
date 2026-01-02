@@ -1,4 +1,4 @@
-# HealthCare+
+# MediCare+
 
 A comprehensive healthcare management platform connecting patients and doctors.
 
