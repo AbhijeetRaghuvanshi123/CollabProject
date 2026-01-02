@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 
-// Lazy Load Components
+// --- COMPONENTS ---
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
 const DoctorDashboard = lazy(() => import("./pages/DoctorDashboard"));
@@ -27,7 +27,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
 
-            {/* Patient Routes */}
+            {/* --- PATIENT ROUTES --- */}
             <Route path="/" element={
               <PrivateRoute restrictedRole="patient">
                 <PatientDashboard />
@@ -46,7 +46,7 @@ function App() {
               </PrivateRoute>
             } />
 
-            {/* Aliases/Missing Routes */}
+            {/* --- MISC ROUTES --- */}
             <Route path="/book-appointment" element={
               <PrivateRoute restrictedRole="patient">
                 <BookAppointment />
@@ -68,7 +68,7 @@ function App() {
               </PrivateRoute>
             } />
 
-            {/* Doctor Routes */}
+            {/* --- DOCTOR ROUTES --- */}
             <Route path="/doctor/dashboard" element={
               <PrivateRoute restrictedRole="doctor">
                 <DoctorDashboard />

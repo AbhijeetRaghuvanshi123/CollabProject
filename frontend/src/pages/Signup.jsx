@@ -32,7 +32,7 @@ const Signup = () => {
                 setSpecializations(response.data.map(s => s.name));
             } catch (err) {
                 console.error("Failed to fetch specializations", err);
-                // Fallback list strictly for UI if API fails (though unlikely if route exists)
+                // Fallback list
                 setSpecializations(["Cardiology", "Dermatology", "Neurology", "Pediatrics", "General Medicine"]);
             }
         };
@@ -56,7 +56,7 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            // Remove 'Dr. ' prefix if present for doctors, to ensure clean name in DB
+            // --- CLEAN NAME FOR DOCTORS ---
             const submissionData = { ...formData };
             if (submissionData.role === 'doctor' && submissionData.name.startsWith("Dr. ")) {
                 submissionData.name = submissionData.name.replace(/^Dr\.\s+/, "");
@@ -71,7 +71,7 @@ const Signup = () => {
 
     return (
         <div className="min-h-screen flex bg-gray-50 dark:bg-zinc-900 transition-colors duration-300">
-            {/* Left Side - Image */}
+            {/* --- LEFT SIDE: IMAGE --- */}
             <div className="hidden lg:flex lg:w-1/2 relative bg-zinc-900">
                 <img
                     src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
@@ -85,7 +85,7 @@ const Signup = () => {
                 </div>
             </div>
 
-            {/* Right Side - Form */}
+            {/* --- RIGHT SIDE: FORM --- */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 lg:px-24 relative py-12">
                 <div className="absolute top-6 right-6">
                     <ThemeToggle />
@@ -109,7 +109,7 @@ const Signup = () => {
                 )}
 
                 <form onSubmit={handleSignup} className="space-y-4">
-                    {/* Role Selection */}
+                    {/* --- ROLE SELECTION --- */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">I am a...</label>
                         <div className="grid grid-cols-3 gap-3">
@@ -163,7 +163,7 @@ const Signup = () => {
                         />
                     </div>
 
-                    {/* Gender Field - Visible for BOTH Patient and Doctor */}
+                    {/* --- GENDER --- */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Gender</label>
                         <select
@@ -178,7 +178,7 @@ const Signup = () => {
                         </select>
                     </div>
 
-                    {/* Date of Birth & Address - Required for Registration */}
+                    {/* --- DOB & ADDRESS --- */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Date of Birth</label>
@@ -205,7 +205,7 @@ const Signup = () => {
                         </div>
                     </div>
 
-                    {/* Specialization - Only for Doctor */}
+                    {/* --- SPECIALIZATION (DOCTOR ONLY) --- */}
                     {formData.role === 'doctor' && (
                         <div>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Specialization</label>
@@ -230,7 +230,7 @@ const Signup = () => {
                                     <option value="Other">Other (Type Custom)</option>
                                 </select>
 
-                                {/* Show input if "Other" is selected or user is typing a new one not in list */}
+                                {/* Custom specialization input */}
                                 {(!specializations.includes(formData.specialization) && formData.specialization !== undefined) && (
                                     <input
                                         type="text"

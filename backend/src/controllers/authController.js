@@ -24,12 +24,11 @@ const generateToken = (user, role) => {
   );
 };
 
-// Register - Primarily for Patients and Admins (Doctors usually added by Admin)
+// --- USER REGISTRATION ---
 authController.post("/register", async (req, res) => {
   try {
     const { name, email, password, role, gender, DOB, address } = req.body;
 
-    // Default to patient if no role provided, or strictly check
     const userRole = role || "patient";
 
     let existingUser;
@@ -68,7 +67,6 @@ authController.post("/register", async (req, res) => {
 
     res.status(201).json({ message: `${userRole.charAt(0).toUpperCase() + userRole.slice(1)} registered successfully` });
 
-    // Send email (fire and forget to avoid blocking)
     const mailOptions = {
       to: email,
       subject: "Registration Notification",
@@ -82,7 +80,7 @@ authController.post("/register", async (req, res) => {
   }
 });
 
-// Login - Requires role to know where to look
+// --- USER LOGIN ---
 authController.post("/login", async (req, res) => {
   try {
     const { email, password, role } = req.body;
@@ -129,7 +127,7 @@ authController.post("/login", async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role || role, // Doctor model doesn't have role field implicit, so use passed role
+        role: user.role || role,
       },
     });
 
@@ -144,7 +142,7 @@ authController.post("/logout", (req, res) => {
   res.status(200).json({ message: "Logout successful" });
 });
 
-// Get Profile
+// --- GET PROFILE ---
 authController.get("/profile", async (req, res) => {
   try {
     const token = req.cookies.token || (req.headers["authorization"] && req.headers["authorization"].split(" ")[1]);
@@ -169,7 +167,6 @@ authController.get("/profile", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Return safe user data
     const userData = user.toObject();
     delete userData.password;
 
@@ -187,7 +184,7 @@ authController.get("/profile", async (req, res) => {
   }
 });
 
-// Verify Token Middleware
+// --- TOKEN VERIFICATION MIDDLEWARE ---
 const verifyToken = (req, res, next) => {
   const token = req.cookies.token || (req.headers["authorization"] && req.headers["authorization"].split(" ")[1]);
 

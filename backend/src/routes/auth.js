@@ -21,7 +21,7 @@ const generateToken = (user, role) => {
     );
 };
 
-// Register
+// --- REGISTER ROUTE ---
 router.post("/register", async (req, res, next) => {
     try {
         const { name, email, password, role, gender, DOB, address } = req.body;
@@ -51,12 +51,10 @@ router.post("/register", async (req, res, next) => {
 
             const hashedPassword = await hash(password, 10);
 
-            // Ensure gender and specialization are passed
             const specName = req.body.specialization;
             let specId;
 
             if (specName) {
-                // Check if specialization exists, if not create it
                 let existingSpec = await Specialization.findOne({ name: specName });
                 if (!existingSpec) {
                     existingSpec = await Specialization.create({ name: specName, description: `Specialists in ${specName}` });
@@ -69,9 +67,9 @@ router.post("/register", async (req, res, next) => {
                 email,
                 password: hashedPassword,
                 role: "doctor",
-                gender: req.body.gender, // Ensure this is handled
+                gender: req.body.gender,
                 specialization: specId,
-                image: req.body.image || "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=400&q=80", // Default or required
+                image: req.body.image || "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=400&q=80",
                 availability: req.body.availability || []
             });
         } else {
@@ -82,7 +80,6 @@ router.post("/register", async (req, res, next) => {
 
         res.status(201).json({ message: `${userRole.charAt(0).toUpperCase() + userRole.slice(1)} registered successfully` });
 
-        // Email (Non-blocking)
         const mailOptions = {
             to: email,
             subject: "Registration Notification",
@@ -96,7 +93,7 @@ router.post("/register", async (req, res, next) => {
     }
 });
 
-// Login
+// --- LOGIN ROUTE ---
 router.post("/login", async (req, res, next) => {
     try {
         console.log("Login attempt:", req.body);
@@ -112,7 +109,6 @@ router.post("/login", async (req, res, next) => {
         else return res.status(400).json({ message: "Invalid role" });
 
         if (!user) {
-            // Check if user exists in other roles to give a better error
             let foundRole = null;
             if (await Patient.findOne({ email })) foundRole = "patient";
             else if (await Doctor.findOne({ email })) foundRole = "doctor";
@@ -131,7 +127,7 @@ router.post("/login", async (req, res, next) => {
         const cookieOptions = {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "lax", // Adjust based on cross-site needs
+            sameSite: "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         };
 

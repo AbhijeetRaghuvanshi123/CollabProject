@@ -38,7 +38,7 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex bg-gray-50 dark:bg-zinc-900 transition-colors duration-300">
-            {/* Left Side - Image */}
+            {/* --- LEFT SIDE: IMAGE --- */}
             <div className="hidden lg:flex lg:w-1/2 relative bg-zinc-900">
                 <img
                     src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
@@ -52,7 +52,7 @@ const Login = () => {
                 </div>
             </div>
 
-            {/* Right Side - Form */}
+            {/* --- RIGHT SIDE: FORM --- */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 lg:px-24 relative">
                 <div className="absolute top-6 right-6">
                     <ThemeToggle />
@@ -76,7 +76,7 @@ const Login = () => {
                 )}
 
                 <form onSubmit={handleLogin} className="space-y-5">
-                    {/* Role Selection */}
+                    {/* --- ROLE SELECTION --- */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">I am a...</label>
                         <div className="grid grid-cols-3 gap-3">

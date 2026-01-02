@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-// Routes
+// --- ROUTES IMPORT ---
 import authRoutes from './routes/auth.js';
 import doctorRoutes from './routes/doctor.js';
 import patientRoutes from './routes/patient.js';
@@ -20,7 +20,7 @@ import paymentRoutes from './routes/payment.js';
 import reportRoutes from "./routes/report.js";
 import waterRoutes from "./routes/water.js";
 
-// Middleware / Utils
+// --- MIDDLEWARE / UTILS IMPORT ---
 import errorHandler from './middleware/errorMiddleware.js';
 import { initSocket } from './utils/socket.js';
 import { createServer } from 'http';
@@ -28,7 +28,7 @@ import { createServer } from 'http';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Ensure we point to the root .env (one level up from src) or adjacent to package.json
+// --- CONFIGURATION ---
 dotenv.config({ path: path.join(path.dirname(__dirname), '.env') });
 
 const app = express();
@@ -37,12 +37,12 @@ const httpServer = createServer(app);
 const PORT = process.env.PORT || 5001;
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
-// Middleware
-app.use(cookieParser()); // Parse cookies
+// --- MIDDLEWARE SETUP ---
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
     origin: [CLIENT_URL, "http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5174"],
-    credentials: true // Allow cookies
+    credentials: true
 }));
 
 // Initialize Socket.io
@@ -51,12 +51,12 @@ initSocket(httpServer);
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Database Connection
+// --- DATABASE CONNECTION ---
 mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/medicare_plus")
     .then(() => console.log('✅ Connected to MongoDB'))
     .catch((err) => console.log('❌ DB Connection Error:', err));
 
-// Routes
+// --- API ROUTES ---
 app.use('/api/auth', authRoutes);
 app.use('/api/doctor', doctorRoutes);
 app.use('/api/patient', patientRoutes);
@@ -74,16 +74,15 @@ app.get('/', (req, res) => {
     res.send('MediCare+ API is Running');
 });
 
-// Error Handler (must be last middleware)
+// --- SERVER START ---
 app.use(errorHandler);
 
 const server = httpServer.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });
 
-// Handle unhandled promise rejections
+// --- GLOBAL ERROR HANDLING ---
 process.on('unhandledRejection', (err, promise) => {
     console.log(`Error: ${err.message}`);
-    // Close server & exit process
     server.close(() => process.exit(1));
 });
