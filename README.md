@@ -1,62 +1,59 @@
-# 🏥 MediCare+ – Smart Hospital Management System
+# HealthCare+
 
-A full-stack **MERN-based hospital management system** designed to digitize and streamline hospital operations for **patients, doctors, and administrators**.
+A comprehensive healthcare management platform connecting patients and doctors.
 
-## 🚀 Features
+## Features
+- **User Roles**: Patient & Doctor portals with specialized dashboards.
+- **Authentication**: Secure Login/Signup with specialized fields (e.g., Doctor Specialization).
+- **Appointment Booking**:
+    - **Real-time Slot Availability**: Visual indicators for efficient booking (Max 6 patients/slot).
+    - **Payment Integration**: Razorpay (Online) and Pay at Clinic (Cash).
+    - **Status Tracking**: Track payment status (Paid/Pending) and Appointment status.
+- **Water Intake Tracker**:
+    - **Daily Goals**: Gender-based hydration goals (Male: 3.7L, Female: 2.7L).
+    - **Visual Logger**: Circular progress widget with quick-add functionality.
+    - **Daily Reset**: Automatically resets intake at midnight.
+- **Medical Reports**:
+    - **Generation**: Doctors can generate detailed digital reports with prescriptions.
+    - **Real-Time Delivery**: Patients receive reports instantly via Socket.io.
+    - **PDF Download**: Download Reports, Appointment Slips, and Payment Receipts as PDFs.
+- **Cancellation System**: Smart cancellation logic with automated refund policies for Patients and Doctors.
+- **Interactive Calendar**: Custom-styled FullCalendar for tracking appointments with status indicators.
+- **Enhanced UI/UX**:
+    - **Modern Design**: Glassmorphism, smooth animations, and responsive layouts.
+    - **Dark Mode**: Fully supported dark mode across all screens.
+    - **Profile Management**: Profile picture upload and instant sync.
 
-### 👤 Patient Panel
-- **Secure Authentication**: Register and login with role-based access.
-- **Dashboard**: View appointment history and manage profile.
-- **Appointment Booking**: Book appointments with doctors.
-- **Medical Reports**: Upload and view prescriptions/reports.
+## Tech Stack
+- **Frontend**: React (Vite), Redux Toolkit, Tailwind CSS, Lucide Icons, Socket.io Client.
+- **Backend**: Node.js, Express, MongoDB, Mongoose, Socket.io.
+- **Tools**: `jspdf` (PDF Generation), `nodemailer` (Email Notifications).
 
-### 🩺 Doctor Panel
-- **Appointment Management**: View and update appointment status.
-- **Prescriptions**: Issue digital prescriptions to patients.
-- **Schedule**: Manage availability (coming soon).
-
-### 🛠️ Admin Panel
-- **User Management**: Manage doctors and patients.
-- **Analytics**: View hospital statistics.
-
-## 💻 Tech Stack
-- **Frontend**: React (Vite), Tailwind CSS (Zinc/Dark Theme), React Router.
-- **Backend**: Node.js, Express.js.
-- **Database**: MongoDB (Mongoose).
-- **Authentication**: JWT (JSON Web Tokens), Role-Based Access Control.
-
-## 🔧 Setup & Installation
+## Getting Started
 
 ### Prerequisites
-- Node.js installed.
-- MongoDB instance (Local or Atlas) URI.
+- Node.js (v14+)
+- MongoDB (Running locally or Atlas URI)
 
-### Steps
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/AbhijeetRaghuvanshi123/CollabProject.git
-   cd CollabProject
-   ```
+### Installation
 
-2. **Backend Setup**
-   ```bash
-   cd backend
-   npm install
-   # Create a .env file with:
-   # PORT=8000
-   # MONGO_URI=your_mongodb_connection_string
-   # JWT_SECRET=your_jwt_secret
-   # CLIENT_URL=http://localhost:5173
-   npm start
-   ```
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/kartikayshukla17/HeathCare-.git
+    cd HeathCare-
+    ```
 
-3. **Frontend Setup**
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
+2.  **Backend Setup**
+    ```bash
+    cd backend
+    npm install
+    # Create .env file with PORT, MONGO_URI, JWT_SECRET, etc.
+    npm run dev
+    ```
 
-## 🎨 UI/UX
-- **Theme**: Dark (Zinc 900/800) and Light modes.
-- **Design**: Clean, modern, professional medical interface.
+3.  **Frontend Setup**
+    ```bash
+    cd frontend
+    npm install
+    npm run dev
+    ```
