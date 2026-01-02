@@ -15,21 +15,19 @@ const DoctorDashboard = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // Select appointments from Redux
     const rawAppointments = useSelector(selectAppointments);
     const appointments = Array.isArray(rawAppointments) ? rawAppointments : [];
     const { loading: apptLoading } = useSelector(state => state.appointments);
     const reports = useSelector(selectReports);
 
     const [doctor, setDoctor] = useState(null);
-    const [loading, setLoading] = useState(true); // Profile loading
-    const [view, setView] = useState('list'); // 'list' | 'calendar'
+    const [view, setView] = useState('list');
     const [imageError, setImageError] = useState(false);
     const [processing, setProcessing] = useState(false);
 
-    // Report Modal State
+    // --- REPORT MODAL STATE ---
     const [showReportModal, setShowReportModal] = useState(false);
-    const [modalMode, setModalMode] = useState('create'); // 'create' | 'view'
+    const [modalMode, setModalMode] = useState('create');
     const [selectedAppt, setSelectedAppt] = useState(null);
     const [diagnosis, setDiagnosis] = useState("");
     const [prescriptions, setPrescriptions] = useState([{ medicine: "", frequency: "Once", duration: "" }]);
@@ -50,7 +48,7 @@ const DoctorDashboard = () => {
                 }
 
                 setDoctor(profile);
-                // Fetch reports for this doctor to know which appts have reports
+                // --- SYNC REPORTS ---
                 if (profile._id) {
                     dispatch(fetchDoctorReports(profile._id));
                 }
@@ -96,7 +94,7 @@ const DoctorDashboard = () => {
         }
     };
 
-    // Report Handlers
+    // --- REPORT HANDLERS ---
     const openGenerateReport = (appt) => {
         setSelectedAppt(appt);
         setModalMode('create');
@@ -145,7 +143,6 @@ const DoctorDashboard = () => {
             return;
         }
 
-        // Filter out empty prescriptions
         const validPrescriptions = prescriptions.filter(p => p.medicine.trim() !== "");
 
         const reportData = {
@@ -176,7 +173,7 @@ const DoctorDashboard = () => {
         );
     }
 
-    // Calculate Stats
+    // --- STATS CALCULATION ---
     const totalPatients = [...new Set(appointments.map(a => a.patientId?._id))].length;
 
     const getNextSlot = () => {

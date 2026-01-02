@@ -17,7 +17,6 @@ const PatientDashboard = () => {
     const { user } = useSelector((state) => state.auth);
     const { loading } = useSelector(state => state.appointments);
 
-    // Select next valid appointment (ignores cancelled)
     const nextAppointment = useSelector(selectNextAppointment);
     const { intakeAmount, dailyGoal } = useSelector((state) => state.water);
     const { upcoming, history } = useSelector((state) => state.appointments.patientData);
@@ -26,7 +25,7 @@ const PatientDashboard = () => {
         dispatch(fetchAppointments());
         dispatch(fetchTodayWater());
 
-        // Fetch latest profile to ensure image is displayed
+        // --- SYNC PROFILE DATA ---
         const loadProfile = async () => {
             try {
                 const { data } = await api.get('/patient/profile');
@@ -41,7 +40,7 @@ const PatientDashboard = () => {
     }, [dispatch]);
 
     const handleAddWater = () => {
-        dispatch(addWater(250)); // Add 1 glass
+        dispatch(addWater(250));
     };
 
     const handleLogout = async () => {
@@ -60,7 +59,7 @@ const PatientDashboard = () => {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-zinc-900 transition-colors p-4 sm:p-8">
             <div className="max-w-6xl mx-auto space-y-8">
-                {/* Header */}
+                {/* --- HEADER --- */}
                 <div className="flex justify-between items-center">
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -95,7 +94,7 @@ const PatientDashboard = () => {
                     </div>
                 </div>
 
-                {/* Hero Section: Vitals & Next Appointment */}
+                {/* --- HERO SECTION: VITALS & NEXT APPOINTMENT --- */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="bg-white dark:bg-zinc-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-700 relative overflow-hidden group hover:border-blue-500 transition-colors">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 dark:bg-blue-900/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
