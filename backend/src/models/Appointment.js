@@ -33,6 +33,29 @@ const AppointmentSchema = new mongoose.Schema(
             type: String, // Can be text or a URL to a file
             default: "",
         },
+        amount: {
+            type: Number,
+            required: true,
+            default: 0,
+        },
+        paymentMethod: {
+            type: String,
+            enum: ["Cash", "Razorpay"],
+            default: "Cash",
+        },
+        paymentStatus: {
+            type: String,
+            enum: ["Pending", "Paid", "Failed", "Refunded"],
+            default: "Pending",
+        },
+        refundAmount: {
+            type: Number,
+            default: 0,
+        },
+        reminderSent: {
+            type: Boolean,
+            default: false,
+        },
     },
     { timestamps: true }
 );
