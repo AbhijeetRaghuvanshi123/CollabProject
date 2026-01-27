@@ -24,6 +24,7 @@ const DoctorDashboard = () => {
     const [view, setView] = useState('list');
     const [imageError, setImageError] = useState(false);
     const [processing, setProcessing] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     // --- REPORT MODAL STATE ---
     const [showReportModal, setShowReportModal] = useState(false);
